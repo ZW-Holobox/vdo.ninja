@@ -5,19 +5,33 @@ function startInteract() {
     return new Promise((resolve) => {
 
         setTimeout(() => {
-            console.log('intervalo')
+            console.log('Inciado')
             resolve()
-        },1000)
+        },2000)
     })
 }
 
 
-function selectAudio(nameDevice) {
-    document.querySelector('[name="CABLE Output (VB-Audio Virtual Cable)"]').click()
-     
+async function selectAudio(nameDevice) {
+    var options = document.querySelectorAll('label')
+
+    for (var i=0; i<options.length;i++){
+        var option = options[i];
+        if (option.innerHTML === nameDevice){
+            option.parentNode.firstChild.click()
+        }
+    }
+
+    return new Promise((resolve) => {
+
+        setTimeout(() => {
+            console.log('Audio Selecionado')
+            resolve()
+        },2000)
+    })
 }
 
-function selectVideo(nameDeviceVideo) {
+async function selectVideo(nameDeviceVideo) {
     var options = document.querySelectorAll('option')
 
     for (var i=0; i<options.length;i++){
@@ -26,11 +40,19 @@ function selectVideo(nameDeviceVideo) {
             option.selected = true
         }
     }
+
+    return new Promise((resolve) => {
+
+        setTimeout(() => {
+            console.log('Video Selecionado')
+            resolve()
+        },2000)
+    })
 }
 
 
-async function runStart(camera){
+async function runStart(camera,audio){
     await startInteract();
-    selectVideo(camera)
-    selectAudio();
+    await selectVideo(camera)
+    await selectAudio(audio);
 }
